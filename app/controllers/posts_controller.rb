@@ -12,6 +12,7 @@ class PostsController < ApplicationController
   end
 
   def create
+  @post = current_user.posts.build(params[:post])
   @post = Post.new(params[:post])
   #raise this should short circuit the method
   if @post.save
