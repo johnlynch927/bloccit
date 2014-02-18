@@ -60,7 +60,7 @@ u = User.new(
   password: 'helloworld', 
   password_confirmation: 'helloworld')
 u.skip_confirmation!
-u.save
+u.save  
 u.update_attribute(:role, 'moderator')
 
 u = User.new(
