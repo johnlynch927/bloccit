@@ -19,7 +19,9 @@ class PostsController < ApplicationController
   def create
     @topic = Topic.find(params[:topic_id])
     @post = current_user.posts.build(params[:post])
-    @post.topic = @topic
+    @post.topic = @topic 
+    # @post.topic = @topic  - what the fuck is this all about? 
+
 
     authorize! :create, @post, message: "You need to be signed up to do that."
     if @post.save
