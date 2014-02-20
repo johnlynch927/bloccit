@@ -1,11 +1,14 @@
 class PostsController < ApplicationController
+
+  
+
   def show
     @topic = Topic.find(params[:topic_id])
     @post = Post.find(params[:id])
   end
 
   def new
-    @topic = Topic.find(params[:topic_id])
+    @topic = Topic.find(params[:topic_id])  
     @post = Post.new
     authorize! :create, Post, message: "You need to be a member to create a new post."
   end
@@ -37,7 +40,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     authorize! :update, @post, message: "You need to own the post to edit it."
     if @post.update_attributes(params[:post])
-      redirect_to [@topic, @post], notice: "Post was saved successfully."
+      redirect_to topic_post_url(@topic, @post), notice: "Post was saved successfully."
     else
       flash[:error] = "There was an error saving the post. Please try again."
       render :new
