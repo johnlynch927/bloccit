@@ -10,5 +10,3 @@ if Rails.env.development?
     :enable_starttls_auto => true
   } 
 end
-
-# add production here
