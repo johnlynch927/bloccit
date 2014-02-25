@@ -1,10 +1,17 @@
 Bloccit::Application.routes.draw do
 
+  get "comments/create"
+
   devise_for :users
 
   resources :topics do
-    resources :posts, except: [:index]
+  resources :topics do
+    resources :posts, except: [:index] do
+      resources :comments, only: [:create, :destroy]
+    end
   end
+
+
 # what is this line all about except: [:index]
 
   match "about" => 'welcome#about', via: :get

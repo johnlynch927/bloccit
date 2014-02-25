@@ -5,6 +5,8 @@ class PostsController < ApplicationController
   def show
     @topic = Topic.find(params[:topic_id])
     @post = Post.find(params[:id])
+    @comments = @post.comments.paginate(page: params[:page], per_page: 10)
+    @comment = @post.comments.build
   end
 
   def new
@@ -22,7 +24,7 @@ class PostsController < ApplicationController
   def create
     @topic = Topic.find(params[:topic_id])
     @post = current_user.posts.build(params[:post])
-    @post.topic = @topic 
+    @post.topic = @topic  
     # @post.topic = @topic  - what the fuck is this all about? 
 
 
@@ -46,4 +48,20 @@ class PostsController < ApplicationController
       render :new
     end
   end
+  
+  def destroy
+    @topic = Topic.find(params[:topic_id])
+    @post = Post.find(params[:id])
+
+    title = @post.title
+    authorize! :destroy, @post, message: "You need to own the post to delete it."
+    if @post.destroy
+      flash[:notice] = "\"#{title}\" was deleted successfully."
+      redirect_to @topic
+    else
+      flash[:error] = "There was an error deleting the post."
+      render :show
+    end
+  end  
 end
+

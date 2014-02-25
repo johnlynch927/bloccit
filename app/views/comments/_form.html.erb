@@ -1,0 +1,6 @@
+
+<%= form_for @comment, url: {action: "create"}, html: {class: "nifty_form"} do |f| %> 
+  <%= f.text_field :post %>
+  <%= f.text_area :body, size: "40x12" %>
+  <%= f.submit "Create" %>
+<% end %>
