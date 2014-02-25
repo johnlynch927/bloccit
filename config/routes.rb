@@ -9,7 +9,7 @@ Bloccit::Application.routes.draw do
     resources :posts, except: [:index] do
       resources :comments, only: [:create, :destroy]
     end
-  end
+  end 
 
 
 # what is this line all about except: [:index]
