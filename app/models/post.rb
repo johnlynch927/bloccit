@@ -4,6 +4,8 @@ class Post < ActiveRecord::Base
   has_many :votes, dependent: :destroy
   belongs_to :user
   belongs_to :topic
+  has_many :favorites, dependent: :destroy
+  
   attr_accessible :body, :title, :topic, :image
 
   default_scope order('created_at DESC')
