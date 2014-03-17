@@ -1,10 +1,10 @@
-class Post < ActiveRecord::Base
-  attr_accessible :body, :title, :topic 
+class Post < ActiveRecord::Base 
   # attr_accessible :body, :title, :topic --- so I'm adding topic here but only able to access topic_id
   has_many :comments, dependent: :destroy
   has_many :votes, dependent: :destroy
   belongs_to :user
   belongs_to :topic
+  attr_accessible :body, :title, :topic, :image
 
   default_scope order('created_at DESC')
 
@@ -12,6 +12,8 @@ class Post < ActiveRecord::Base
   validates :body, length: { minimum: 20 }, presence: true
   validates :topic, presence: true
   validates :user, presence: true  
+
+  after_create :create_vote
 
   # mount_uploader :image, ImageUploader
 
@@ -26,5 +28,19 @@ class Post < ActiveRecord::Base
   def points
     self.votes.sum(:value).to_i
   end  
-end
+
+  def update_rank
+    age = (self.created_at - Time.new(1970,1,1)) / 86400
+    new_rank = points + age
+
+    self.update_attribute(:rank, new_rank)
+  end
+
+    private
+
+  # Who ever created a post, should automatically be set to "voting" it up.
+        def create_vote
+          self.user.votes.create(value: 1, post: self)
+        end  
+    end 
 
