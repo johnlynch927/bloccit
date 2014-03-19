@@ -11,19 +11,16 @@ class User < ActiveRecord::Base
       self.favorites.where(post_id: post.id).first
     end
 
-  private
-
-  def set_member
-    self.role = 'member'
-  end
-
-
+ attr_accessor :current_password
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable,
          :omniauthable, :omniauth_providers => [:facebook]
 
-  attr_accessible :email, :password, :password_confirmation,
-                  :remember_me, :name, :avatar, :provider, :uid, :email_favorites
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :avatar, :avatar_cache, :current_password
+  attr_accessible :provider, :uid, :email_favorites
+
+
   
   has_many :posts
   has_many :comments
@@ -49,6 +46,12 @@ class User < ActiveRecord::Base
     end
     user
   end
+
+private
+  def set_member
+    self.role = 'member'
+  end
+
 end
 
   

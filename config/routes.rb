@@ -2,8 +2,12 @@ Bloccit::Application.routes.draw do
 
   get "comments/create"
 
+
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations' }
- 
+
+  resources :users, only: [:show] # create a route for users#show
+
+
   resources :topics do
     resources :posts, except: [:index] do
       resources :comments, only: [:create, :destroy]
@@ -12,9 +16,6 @@ Bloccit::Application.routes.draw do
       resources :favorites, only: [:create, :destroy]
     end
   end 
-
-
-# what is this line all about except: [:index]
 
   match "about" => 'welcome#about', via: :get
   # what is this line all about  match "about" => 'welcome#about', via: :get 

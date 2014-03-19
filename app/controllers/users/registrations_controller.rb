@@ -17,4 +17,4 @@ class Users::RegistrationsController < Devise::RegistrationsController
       render "devise/registrations/edit"
     end
   end
-end
+end 
