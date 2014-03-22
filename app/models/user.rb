@@ -47,6 +47,10 @@ class User < ActiveRecord::Base
     user
   end
 
+    def voted(post)
+       self.votes.where(post_id: post.id).first
+    end
+
 private
   def set_member
     self.role = 'member'

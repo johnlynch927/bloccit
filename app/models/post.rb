@@ -8,7 +8,8 @@ class Post < ActiveRecord::Base
   
   attr_accessible :body, :title, :topic, :image
 
-  default_scope order('created_at DESC')
+  default_scope order('rank DESC')
+  scope :visible_to, lambda { |user| user ? scoped : joins(:topic).where('topics.public' => true) }
 
   validates :title, length: { minimum: 5 }, presence: true
   validates :body, length: { minimum: 20 }, presence: true
@@ -38,14 +39,7 @@ class Post < ActiveRecord::Base
     self.update_attribute(:rank, new_rank)
   end
 
-  def voted(post)
-
-    self.votes.where(post_id: post.id).first
-
-  end
-
     private
-
   # Who ever created a post, should automatically be set to "voting" it up.
         def create_vote
           self.user.votes.create(value: 1, post: self)
