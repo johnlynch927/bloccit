@@ -1,6 +1,5 @@
 class Topics::PostsController < ApplicationController
 
-  
 
   def show
     @topic = Topic.find(params[:topic_id])
