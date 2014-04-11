@@ -1,5 +1,5 @@
 class Topics::PostsController < ApplicationController
-
+          # Topics::PostsController instructs the controller where to find the appropriate views to invoke.
 
   def show
     @topic = Topic.find(params[:topic_id])
