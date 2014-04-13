@@ -17,14 +17,15 @@
     <h2 class='js-comments-count'><%= @comments.count %> Comments</h2>
     <div class="js-comments">  
       <%= render partial: 'comments/comment', collection: @comments, locals: { topic: @topic, post: @post } %>
-    </div>
-    
-    <% if can? :create, Comment %>
-      <hr/>
+    </div
 
-        <a href="#" class="js-add-comment">Add Comment</a>
-    <br/>
-      <div class="js-new-comment hide">
+
+<% if can? :create, Comment %>
+  <hr/> 
+
+<a href="#" class="js-add-comment">Add Comment</a>
+  <br/>
+  <div class="js-new-comment hide"> 
     <h4>New Comment</h4>
     <%= render partial: 'comments/form', locals: { topic: @topic, post: @post, comment: @comment } %>
   </div>
